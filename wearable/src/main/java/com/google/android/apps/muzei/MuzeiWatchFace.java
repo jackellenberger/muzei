@@ -198,6 +198,7 @@ public class MuzeiWatchFace extends CanvasWatchFaceService {
         boolean mLowBitAmbient;
         boolean mIsRound;
         boolean mBlurred;
+        String mSelectedFont;
 
         @Override
         public void onCreate(SurfaceHolder holder) {
@@ -217,8 +218,7 @@ public class MuzeiWatchFace extends CanvasWatchFaceService {
             mDateMinAvailableMargin = getResources().getDimension(R.dimen.date_min_available_margin);
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(Color.BLACK);
-            mHeavyTypeface = Typeface.createFromAsset(getAssets(), "NunitoClock-Bold.ttf");
-            mLightTypeface = Typeface.createFromAsset(getAssets(), "NunitoClock-Regular.ttf");
+            checkFontUpdate();
 
             float densityMultiplier = getResources().getDisplayMetrics().density;
 
@@ -256,6 +256,20 @@ public class MuzeiWatchFace extends CanvasWatchFaceService {
                     4f * densityMultiplier, 0, 2f * densityMultiplier,
                     0x66000000);
             recomputeDateFormat();
+        }
+
+        private void checkFontUpdate() {
+            String newSelectedFont = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("SELECTED_FONT", "Monoton");
+            if (newSelectedFont == mSelectedFont)
+                    return;
+            else {
+                mSelectedFont = newSelectedFont;
+                String selectedFontAssetBold = mSelectedFont + "-Bold.ttf";
+                String selectedFontAssetRegular = mSelectedFont + "-Regular.ttf";
+
+                mHeavyTypeface = Typeface.createFromAsset(getAssets(), selectedFontAssetBold);
+                mLightTypeface = Typeface.createFromAsset(getAssets(), selectedFontAssetRegular);
+            }
         }
 
         private void recomputeClockTextHeight() {
@@ -370,6 +384,7 @@ public class MuzeiWatchFace extends CanvasWatchFaceService {
                         true, mLoadImageContentObserver);
 
                 registerReceiver();
+                checkFontUpdate();
 
                 // Update time zone in case it changed while we weren't visible.
                 mCalendar.setTimeZone(TimeZone.getDefault());

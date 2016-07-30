@@ -77,4 +77,18 @@
         android:layout_marginLeft="@dimen/settings_advanced_checkbox_margin_start"
         android:layout_marginTop="16dp" />
 
+    <Space
+        android:layout_height="16dp"
+        android:layout_columnSpan="3" />
+    <TextView
+        style="@style/Widget.Muzei.TextView.SettingsAdvancedSeekBarLabel"
+        android:layout_gravity="fill_vertical|end"
+        android:text="@string/settings_font_spinner_title" />
+
+    <Spinner
+        android:id="@+id/font_select"
+        android:layout_gravity="center_vertical|fill_horizontal"
+        android:layout_columnSpan="2"
+        android:background="?selectableItemBackground"
+        android:spinnerMode="dropdown" />
 </GridLayout>

@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">Muzei</string>
+    <string name="app_name">Morezei</string>
     <string name="app_description">Muzei Live Wallpaper</string>
 
     <string name="settings_title">Muzei Settings</string>
@@ -75,4 +75,12 @@
     ]]></string>
     <string name="about_version_template">v%1$s</string>
     <string name="app_author">Roman Nurik</string>
+    <string name="settings_font_spinner_title">Font</string>
+    <string-array name="available_fonts">
+        <item>AmaticaSC</item>
+        <item>Arvo</item>
+        <item>Monoton</item>
+        <item>NunitoClock</item>
+        <item>WorkSans</item>
+    </string-array>
 </resources>

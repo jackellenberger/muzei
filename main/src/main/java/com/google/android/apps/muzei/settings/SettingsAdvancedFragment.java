@@ -22,13 +22,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.google.android.apps.muzei.LockScreenVisibleReceiver;
 import com.google.android.apps.muzei.NewWallpaperNotificationReceiver;
@@ -53,6 +58,7 @@ public class SettingsAdvancedFragment extends Fragment
     private SeekBar mGreySeekBar;
     private CheckBox mNotifyNewWallpaperCheckBox;
     private CheckBox mBlurOnLockScreenCheckBox;
+    private Spinner mFontSpinner;
 
     public SettingsAdvancedFragment() {
     }
@@ -154,6 +160,24 @@ public class SettingsAdvancedFragment extends Fragment
         );
         mBlurOnLockScreenCheckBox.setChecked(!getSharedPreferences()
                 .getBoolean(LockScreenVisibleReceiver.PREF_ENABLED, false));
+
+        mFontSpinner = (Spinner) rootView.findViewById(R.id.font_select);
+        String[] availableFonts = getResources().getStringArray(R.array.available_fonts);
+        SpinnerAdapter adapter = new ArrayAdapter<>(this.getContext(),R.layout.settings_ab_spinner_list_item_dropdown,availableFonts);
+        mFontSpinner.setAdapter(adapter);
+        mFontSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String selectedFont = (String) parent.getItemAtPosition(position);
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putString("SELECTED_FONT", selectedFont).apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
         return rootView;
     }
 

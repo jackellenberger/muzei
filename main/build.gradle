@@ -128,6 +128,7 @@ dependencies {
     compile project(':android-client-common')
     compile project(':source-featured-art')
     compile project(':source-gallery')
-    devWearApp project(path: ':wearable', configuration: 'devRelease')
-    prodWearApp project(path: ':wearable', configuration: 'prodRelease')
+    compile project(':wearable')
+    //devWearApp project(path: ':wearable', configuration: 'devRelease')
+    //prodWearApp project(path: ':wearable', configuration: 'prodRelease')
 }

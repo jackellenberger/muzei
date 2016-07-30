@@ -45,7 +45,7 @@ sourceSets {
         }
     }
 }
-
+/*
 task javadoc(type: Exec, overwrite: true, dependsOn: 'jar') {
     commandLine './javadoc-scripts/generate_javadoc.sh'
 }
@@ -67,22 +67,22 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
-
+*/
 dependencies {
     compile files("${android.sdk}/platforms/${android.target}/android.jar")
 }
 
 // http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
 // TODO: switch to http://www.gradle.org/docs/current/userguide/publishing_maven.html
-
+/*
 signing {
     sign configurations.archives
 }
-
+*/
 uploadArchives {
     repositories {
         mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            //beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: props["sonatypeUsername"], password: props["sonatypePassword"])
