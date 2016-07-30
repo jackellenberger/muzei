@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.ViewConfiguration;
 
+import com.google.android.apps.muzei.api.MuzeiArtSource;
 import com.google.android.apps.muzei.event.ArtDetailOpenedClosedEvent;
 import com.google.android.apps.muzei.event.LockScreenVisibleChangedEvent;
 import com.google.android.apps.muzei.event.WallpaperActiveStateChangedEvent;
@@ -184,7 +185,12 @@ public class MuzeiWallpaperService extends GLWallpaperService {
                 queueEvent(new Runnable() {
                     @Override
                     public void run() {
-                        mRenderer.setIsBlurred(!mRenderer.isBlurred(), false);
+                        if (mRenderer.isBlurred())
+                            mRenderer.setIsBlurred(!mRenderer.isBlurred(), false);
+                        else {
+                            SourceManager mSourceManager = SourceManager.getInstance(getBaseContext());
+                            mSourceManager.sendAction(MuzeiArtSource.BUILTIN_COMMAND_ID_NEXT_ARTWORK);
+                        }
                         // Schedule a re-blur
                         delayedBlur();
                     }
